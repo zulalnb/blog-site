@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>MVC Blog</title>
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/BlogHome/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="~/Content/BlogHome/css/blog-home.css" rel="stylesheet">
+    <link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/gridmvc.min.js")" type="text/javascript"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary fixed-top">
+        <div class="container">
+            
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="navbar-brand" href="/Home/Index/">MVC Blog</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">
+                            Home
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/Hakkimizda/">Hakkımızda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/Iletisim/">İletişim</a>
+                    </li>
+
+
+
+                    @*@if (Session["uyeid"] != null)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" href="/Uye/Index/@Session["uyeid"]">@Session["kullaniciadi"].ToString()</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Uye/Logout/">Çıkış</a>
+                </li>
+                if (Convert.ToInt32(Session["yetkiid"]) == 1)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Admin/Index/" target="_blank">Admin Paneli</a>
+                    </li>
+                }
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link" href="/Uye/Login/">Giriş</a>
+                </li>
+            }*@
+
+            </ul>
+
+            <ul class="nav navbar-nav ml-auto">
+                @if (Session["uyeid"] != null)
+                {
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                            <i class="fa fa-user fa-fw"></i>@Session["kullaniciadi"].ToString() <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="/Uye/Index/@Session["uyeid"]"><i class="fa fa-fw fa-user"></i>Profil</a>
+                            </li>
+                            @if (Convert.ToInt32(Session["yetkiid"]) == 1)
+                            {
+                                <li>
+                                    <a href="/Admin/Index/" target="_blank"><i class="fa fa-gear fa-fw"></i>Admin Paneli</a>
+                                </li>
+                            }
+                            <li class="divider"></li>
+                            <li>
+                                <a href="/Uye/Logout/"><i class="fa fa-sign-out fa-fw"></i>Çıkış</a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-user -->
+                    </li>
+                } else
+                  {                       
+                        <li>
+                            <a href="/Uye/Login/"><i class="fa fa-sign-in fa-fw"></i>Giriş | </a>
+                        </li>                          
+                        <li >
+                            <a href="/Uye/Create/"><i class="fa fa-registered fa-fw"></i>| Kayıt Ol</a>
+                        </li>                       
+                  }
+            </ul>
+
+                    @*<ul class="nav navbar-nav ml-auto">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        @if (Session["uyeid"] != null)
+                        {
+                            <li>
+                                <a href="/Uye/Index/@Session["uyeid"]"><i class="fa fa-user fa-fw"></i>Profil</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="/Uye/Logout/"><i class="fa fa-sign-out fa-fw"></i>Çıkış</a>
+                            </li>
+                            <li>
+                                <a href="/Admin/Index/" target="_blank"><i class="fa fa-gear fa-fw"></i>Admin Paneli</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="divider"></li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Uye/Login/">Giriş</a>
+                            </li>
+                        }
+                    </ul>
+                     /.dropdown-user
+                </li>
+            </ul>*@
+            </div>
+        </div>
+    </nav>
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+
+            <!-- Blog Entries Column -->
+            <div class="col-md-8">
+                @RenderBody() @*
+                <h1 class="my-4">
+                    Page Heading
+                    <small>Secondary Text</small>
+                </h1>
+                <!-- Blog Post -->
+                <div class="card mb-4">
+                    <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+                    <div class="card-body">
+                        <h2 class="card-title">Post Title</h2>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
+                        <a href="#" class="btn btn-primary">Read More &rarr;</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Posted on January 1, 2017 by
+                        <a href="#">Start Bootstrap</a>
+                    </div>
+                </div>
+                <!-- Blog Post -->
+                <div class="card mb-4">
+                    <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+                    <div class="card-body">
+                        <h2 class="card-title">Post Title</h2>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
+                        <a href="#" class="btn btn-primary">Read More &rarr;</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Posted on January 1, 2017 by
+                        <a href="#">Start Bootstrap</a>
+                    </div>
+                </div>
+                <!-- Blog Post -->
+                <div class="card mb-4">
+                    <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+                    <div class="card-body">
+                        <h2 class="card-title">Post Title</h2>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
+                        <a href="#" class="btn btn-primary">Read More &rarr;</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Posted on January 1, 2017 by
+                        <a href="#">Start Bootstrap</a>
+                    </div>
+                </div>
+                <!-- Pagination -->
+                <ul class="pagination justify-content-center mb-4">
+                    <li class="page-item">
+                        <a class="page-link" href="#">&larr; Older</a>
+                    </li>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">Newer &rarr;</a>
+                    </li>
+                </ul>*@
+            </div>
+            <!-- Sidebar Widgets Column -->
+            <div class="col-md-4">
+                <!-- Search Widget -->
+                <div class="card my-4">
+                    @Html.Partial("BlogAraPartial")
+
+
+
+                </div>
+                <!-- Categories Widget -->
+                <div class="card my-4">                    
+                    @{
+                        Html.RenderAction("KategoriPartial", "Home");
+                    }                    
+                </div>
+                <div class="card my-4">
+                    @{
+                        Html.RenderAction("PopulerMakaleler", "Home");
+                    }
+                </div>
+                <!-- Side Widget -->
+                <div class="card my-4">
+                    @{
+                        Html.RenderAction("SonYorumlar", "Home");
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; @DateTime.Now.Year</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+    <script src="@Url.Content("~/Scripts/gridmvc.min.js")" type="text/javascript"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="~/Content/BlogHome/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/BlogHome/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
